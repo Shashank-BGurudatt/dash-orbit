@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DashOrbit - Nutanic Cloud Manager</title>
+  <style>
+    :root {
+      --bg-dark: url('assets/background-dark.png');
+      --bg-light: url('assets/background-light.png');
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: black var(--bg-dark) no-repeat center center fixed;
+      background-size: cover;
+      transition: background 0.2s ease, color 0.2s ease;
+      position: relative;
+      color: #fff;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: -1;
+      transition: background 0.2s ease;
+    }
+
+    body.light-mode {
+      background: white var(--bg-light) no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+
+    body.light-mode::before {
+      background: rgba(255,255,255,0.5);
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 1.5rem 2rem;
+      background: linear-gradient(270deg, #2e7d32, #00e676, #66bb6a);
+      background-size: 600% 600%;
+      animation: gradientShift 20s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .logo {
+      position: absolute;
+      left: 1rem;
+      height: 80px;
+      width: auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: black; /* default for dark mode */
+      transition: color 0.2s ease;
+    }
+
+    body.light-mode h1 {
+      color: white; /* inverted for light mode */
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 1.5rem;
+      background: #00e676;
+      color: #000;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background: #2e7d32;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .dropdowns {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .dropdown {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 220px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    select {
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #2e7d32;
+      background: #fff;
+      color: #333;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    select:hover, select:focus {
+      border-color: #00e676;
+      box-shadow: 0 0 12px rgba(0,230,118,0.5);
+      transform: scale(1.05);
+      background: #f0fff0;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    footer {
+      background: #333;
+      text-align: center;
+      padding: 1rem;
+      margin-top: auto;
+      color: white;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    body.light-mode footer {
+      background: #ddd;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png" alt="DashOrbit Logo" class="logo">
+    <h1>DashOrbit - NCM Report Hub</h1>
+    <button class="toggle-btn" id="modeToggle">Light Mode</button>
+  </header>
+
+  <div class="dropdowns">
+    <div class="dropdown">
+      <label for="versions">Select Version:</label>
+      <select id="versions" name="versions">
+        <option value="--select--">--Select--</option>
+        <option value="2.0.0">2.0.0</option>
+        <option value="1.0.0">1.0.0</option>
+      </select>
+    </div>
+
+    <div class="dropdown">
+      <label for="blueprint">Select Blueprint Type:</label>
+      <select id="blueprint" name="blueprint">
+        <option value="--select--">--Select--</option>
+        <option value="foundation-lite">Foundation-Lite</option>
+        <option value="intermediate-pro">Intermediate-Pro</option>
+        <option value="comprehensive-enterprise">Comprehensive-Enterprise</option>
+      </select>
+    </div>
+
+    <div class="dropdown">
+      <label for="blueprintName">Select Blueprint Name:</label>
+      <select id="blueprintName" name="blueprintName">
+        <option value="--select--">--Select--</option>
+      </select>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 DashOrbit</p>
+  </footer>
+
+  <script>
+    const blueprintSelect = document.getElementById('blueprint');
+    const blueprintNameSelect = document.getElementById('blueprintName');
+    const modeToggle = document.getElementById('modeToggle');
+    const body = document.body;
+
+    blueprintSelect.addEventListener('change', function() {
+      const selectedType = this.value;
+      blueprintNameSelect.innerHTML = '<option value="--select--">--Select--</option>';
+
+      if (selectedType === 'foundation-lite') {
+        const option = document.createElement('option');
+        option.value = 'bp-small';
+        option.textContent = 'BP-Small';
+        blueprintNameSelect.appendChild(option);
+      }
+    });
+
+    modeToggle.addEventListener('click', function() {
+      body.classList.toggle('light-mode');
+      modeToggle.textContent = body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
+    });
+  </script>
+</body>
+</html>
