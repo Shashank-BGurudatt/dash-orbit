@@ -1,68 +1,49 @@
-const versionSelect = document.getElementById('versions');
-const blueprintSelect = document.getElementById('blueprint');
-const blueprintNameSelect = document.getElementById('blueprintName');
-const modeToggle = document.getElementById('modeToggle');
-const body = document.body;
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.querySelector(".toggle-btn");
 
-const typeError = document.getElementById('typeError');
-const nameError = document.getElementById('nameError');
-
-// Enable Type only after Version is chosen
-versionSelect.addEventListener('change', function() {
-  if (this.value) {
-    blueprintSelect.disabled = false;
-    typeError.style.display = "none";
-  } else {
-    blueprintSelect.disabled = true;
-    blueprintNameSelect.disabled = true;
-  }
-});
-
-// Enable Name only after Type is chosen
-blueprintSelect.addEventListener('change', function() {
-  if (this.value) {
-    blueprintNameSelect.disabled = false;
-    nameError.style.display = "none";
-    blueprintNameSelect.innerHTML = '<option value="">--Select--</option>';
-
-    if (this.value === 'foundation-lite') {
-      blueprintNameSelect.innerHTML += '<option value="bp-small">BP-Small</option>';
+  // Dark mode toggle
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    // Optional: change button text
+    if (document.body.classList.contains("light-mode")) {
+      toggleBtn.textContent = "Switch to Dark Mode";
+    } else {
+      toggleBtn.textContent = "Switch to Light Mode";
     }
-  } else {
-    blueprintNameSelect.disabled = true;
-  }
-});
+  });
 
-// Show inline error if user clicks disabled dropdown
-blueprintSelect.addEventListener('mousedown', function(e) {
-  if (this.disabled) {
-    e.preventDefault();
-    typeError.style.display = "block";
-  }
-});
+  // Dropdown sequence logic
+  const dropdowns = [
+    document.getElementById("version"),
+    document.getElementById("bp-type"),
+    document.getElementById("bp-name"),
+    document.getElementById("automation"),
+    document.getElementById("iteration"),
+    document.getElementById("result-type")
+  ];
 
-blueprintNameSelect.addEventListener('mousedown', function(e) {
-  if (this.disabled) {
-    e.preventDefault();
-    nameError.style.display = "block";
-  }
-});
+  dropdowns.forEach((dropdown, index) => {
+    dropdown.addEventListener("focus", () => {
+      // If previous dropdown not selected, show error
+      if (index > 0) {
+        const prev = dropdowns[index - 1];
+        if (!prev.value) {
+          const error = dropdown.parentElement.querySelector(".error-message");
+          if (error) error.style.display = "block";
+          dropdown.blur(); // prevent interaction
+        }
+      }
+    });
 
-// Toggle dark/light mode
-modeToggle.addEventListener('click', function() {
-  body.classList.toggle('light-mode');
-  modeToggle.textContent = body.classList.contains('light-mode') ? 'Dark Mode' : 'Light Mode';
-});
+    dropdown.addEventListener("change", () => {
+      // Hide error when valid selection made
+      const error = dropdown.parentElement.querySelector(".error-message");
+      if (error) error.style.display = "none";
 
-// Example: dynamically add new iteration
-const iterationSelect = document.getElementById('iteration');
-let currentIteration = 3;
-function addIteration() {
-  currentIteration++;
-  const option = document.createElement('option');
-  option.value = currentIteration;
-  option.textContent = currentIteration;
-  iterationSelect.appendChild(option);
-}
-// Simulate automation adding iteration after 5s
-setTimeout(addIteration, 5000);
+      // Enable next dropdown
+      if (index < dropdowns.length - 1) {
+        dropdowns[index + 1].disabled = false;
+      }
+    });
+  });
+});

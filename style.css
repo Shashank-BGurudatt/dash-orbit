@@ -9,74 +9,69 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: black var(--bg-dark) no-repeat center center fixed;
-  background-size: cover;
+  background: #000;
   transition: background 0.2s ease, color 0.2s ease;
-  position: relative;
   color: #fff;
 }
 
-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
-  transition: background 0.2s ease;
-}
-
 body.light-mode {
-  background: white var(--bg-light) no-repeat center center fixed;
-  background-size: cover;
+  background: #fff;
   color: #333;
 }
 
-body.light-mode::before {
-  background: rgba(255,255,255,0.9);
-}
-
+/* Header simplified */
 header {
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
-  padding: 1.5rem 2rem;
-  background: linear-gradient(270deg, #2e7d32, #00e676, #66bb6a);
-  background-size: 600% 600%;
-  animation: gradientShift 20s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.logo {
-  position: absolute;
-  left: 0rem;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 80px;
-  width: auto;
+  background-color: #006400;
+  z-index: 10;
+  padding: 0 1.5rem;
 }
 
-h1 {
+header .logo {
+  height: 60px;
+  width: auto;
+  margin-right: 1rem;
+}
+
+header h1 {
   margin: 0;
   font-size: 1.8rem;
   color: black;
-  transition: color 0.2s ease;
 }
 
-body.light-mode h1 {
-  color: white;
+body.light-mode header h1 {
+  color: black;
+}
+
+/* Sidebar with toggle at bottom */
+.sidebar {
+  position: absolute;
+  top: 80px;
+  bottom: 50px;
+  left: 0;
+  width: 250px;
+  background: #333;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 .toggle-btn {
-  position: absolute;
-  right: 1.5rem;
+  margin-top: auto; /* pushes toggle to bottom */
   background: #00e676;
   color: #000;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
@@ -89,25 +84,12 @@ body.light-mode h1 {
   transform: scale(1.05);
 }
 
-.dropdowns {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin: 1.5rem 0;
-  flex-wrap: nowrap;
-}
-
-.dropdown {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 200px;
-}
-
-label {
+/* Dropdown styling */
+.dropdown label {
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   text-align: left;
+  color: #eee;
 }
 
 select {
@@ -115,10 +97,22 @@ select {
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #2e7d32;
-  background: #fff;
+  background: #f9f9f9;
   color: #333;
   transition: all 0.3s ease;
   width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+select:hover {
+  border-color: #00e676;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+select:focus {
+  outline: none;
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.3);
 }
 
 select:disabled {
@@ -127,6 +121,7 @@ select:disabled {
   cursor: not-allowed;
 }
 
+/* Error message hidden by default */
 .error-message {
   color: red;
   font-size: 0.85rem;
@@ -134,16 +129,45 @@ select:disabled {
   display: none;
 }
 
+/* Main content with background image */
+main {
+  margin-left: 250px;
+  margin-top: 80px;
+  margin-bottom: 50px;
+  flex: 1;
+  background: var(--bg-dark) no-repeat center center;
+  background-size: cover;
+  z-index: 1;
+}
+
+body.light-mode main {
+  background: var(--bg-light) no-repeat center center;
+  background-size: cover;
+}
+
+/* Footer perfectly centered */
 footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
   background: #333;
-  text-align: center;
-  padding: 1rem;
-  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   transition: color 0.2s ease, background 0.2s ease;
+  z-index: 10;
 }
 
 body.light-mode footer {
   background: #ddd;
   color: black;
+}
+
+/* Content area */
+.content {
+  flex: 1;
+  padding: 2rem;
 }

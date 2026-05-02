@@ -3,74 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DashOrbit - Nutanic Cloud Manager</title>
+  <title>DashOrbit</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <img src="assets/logo.png" alt="DashOrbit Logo" class="logo">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
     <h1>DashOrbit - NCM Report Hub</h1>
-    <button class="toggle-btn" id="modeToggle">Light Mode</button>
   </header>
 
-  <div class="dropdowns">
+  <aside class="sidebar">
     <div class="dropdown">
-      <label for="versions">Select Version:</label>
-      <select id="versions" name="versions">
+      <label for="version">Version</label>
+      <select id="version">
         <option value="">--Select--</option>
-        <option value="2.0.0">2.0.0</option>
-        <option value="1.0.0">1.0.0</option>
+        <option value="1.0">1.0</option>
+        <option value="2.0">2.0</option>
       </select>
-      <span id="versionError" class="error-message">Please select a version first.</span>
+      <div class="error-message">Please select the previous option first.</div>
     </div>
 
     <div class="dropdown">
-      <label for="blueprint">Select Blueprint Type:</label>
-      <select id="blueprint" name="blueprint" disabled>
+      <label for="bp-type">Blueprint Type</label>
+      <select id="bp-type" disabled>
         <option value="">--Select--</option>
-        <option value="foundation-lite">Foundation-Lite</option>
+        <option value="BP-Small">BP-Small</option>
       </select>
-      <span id="typeError" class="error-message">Please select a version before choosing type.</span>
+      <div class="error-message">Select Version first.</div>
     </div>
 
     <div class="dropdown">
-      <label for="blueprintName">Select Blueprint Name:</label>
-      <select id="blueprintName" name="blueprintName" disabled>
+      <label for="bp-name">Blueprint Name</label>
+      <select id="bp-name" disabled>
         <option value="">--Select--</option>
+        <option value="BP-Alpha">BP-Alpha</option>
+        <option value="BP-Beta">BP-Beta</option>
       </select>
-      <span id="nameError" class="error-message">Please select a type before choosing name.</span>
+      <div class="error-message">Select Blueprint Type first.</div>
     </div>
 
     <div class="dropdown">
-      <label for="automationType">Automation Type:</label>
-      <select id="automationType" name="automationType">
+      <label for="automation">Automation Type</label>
+      <select id="automation" disabled>
         <option value="">--Select--</option>
-        <option value="dsl">DSL Results</option>
-        <option value="ui">UI Results</option>
+        <option value="DSL">DSL Results</option>
+        <option value="UI">UI Results</option>
       </select>
+      <div class="error-message">Select Blueprint Name first.</div>
     </div>
 
     <div class="dropdown">
-      <label for="iteration">Iteration:</label>
-      <select id="iteration" name="iteration">
+      <label for="iteration">Iteration</label>
+      <select id="iteration" disabled>
+        <option value="">--Select--</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
       </select>
+      <div class="error-message">Select Automation Type first.</div>
     </div>
 
     <div class="dropdown">
-      <label for="resultType">Result Type:</label>
-      <select id="resultType" name="resultType">
+      <label for="result-type">Result Type</label>
+      <select id="result-type" disabled>
         <option value="">--Select--</option>
-        <option value="launch">Launch</option>
-        <option value="delete">Delete</option>
+        <option value="Launch">Launch</option>
+        <option value="Delete">Delete</option>
       </select>
+      <div class="error-message">Select Iteration first.</div>
     </div>
-  </div>
+
+    <!-- Toggle button at bottom -->
+    <button class="toggle-btn">Toggle Dark Mode</button>
+  </aside>
+
+  <main>
+    <div class="content">
+    </div>
+  </main>
 
   <footer>
-    <p>&copy; 2026 DashOrbit</p>
+    <p>© 2026 DashOrbit - Nutanix Cloud Manager Report Hub</p>
   </footer>
 
   <script src="script.js"></script>
