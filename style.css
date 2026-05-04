@@ -19,11 +19,10 @@ body.light-mode {
   color: #333;
 }
 
-/* Header simplified */
+/* Header with logo locked to far left */
 header {
   display: flex;
   align-items: center;
-  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -31,24 +30,37 @@ header {
   height: 80px;
   background-color: #006400;
   z-index: 10;
-  padding: 0 1.5rem;
+  /* remove horizontal padding so logo touches edge */
+  padding-right: 1.5rem;
+  padding-left: 0;
 }
 
-header .logo {
-  height: 60px;
+.header-left {
+  flex: 0 0 auto; /* logo fixed left */
+  margin-left: 0; /* no extra margin */
+}
+
+.logo {
+  height: 80px;
   width: auto;
-  margin-right: 1rem;
+  display: block;
 }
 
-header h1 {
+.header-center {
+  flex: 1;          /* take remaining space */
+  text-align: center;
+}
+
+.header-center h1 {
   margin: 0;
   font-size: 1.8rem;
   color: black;
 }
 
-body.light-mode header h1 {
+body.light-mode .header-center h1 {
   color: black;
 }
+
 
 /* Sidebar with toggle at bottom */
 .sidebar {
@@ -61,10 +73,11 @@ body.light-mode header h1 {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.3rem;
   overflow-y: auto;
   z-index: 10;
 }
+
 
 .toggle-btn {
   margin-top: auto; /* pushes toggle to bottom */
